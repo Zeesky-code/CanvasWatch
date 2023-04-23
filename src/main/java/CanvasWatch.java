@@ -1,5 +1,7 @@
 import picocli.CommandLine;
+import picocli.CommandLine.Parameters;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,12 +14,11 @@ import java.util.List;
 )
 
 public class CanvasWatch implements Runnable{
-	@CommandLine.Option(names = {"-t", "--token"}, description = "Canvas access token", required = true)
+	@Parameters(index = "0", description = "Canvas access token")
 	private String token;
 
-	@CommandLine.Option(names = {"-l", "--link"}, description = "Canvas university link", required = true)
+	@Parameters(index = "1", description = "Canvas university link")
 	private String link;
-
 
 	public static void main(String[] args) {
 		new CommandLine(new CanvasWatch()).execute(args);
