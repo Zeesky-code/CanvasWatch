@@ -4,8 +4,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+
+
 
 public class CanvasApiClient {private static final String BASE_URL = "https://estuoys.eskisehir.edu.tr/api/v1/";
 	private final String token;
@@ -27,10 +31,16 @@ public class CanvasApiClient {private static final String BASE_URL = "https://es
 		if (!response.isSuccessful()){
 			throw new IOException("Unexpected code " + response);
 		}
-		System.out.println(response.headers());
 		String responseBody = response.body().string();
+		String cleanedResponse = removeHtmlTags(responseBody);
 		Gson gson = new Gson();
-		Assignment[] assignments = gson.fromJson(responseBody, Assignment[].class);
+		Assignment[] assignments = gson.fromJson(cleanedResponse, Assignment[].class);
 		return Arrays.asList(assignments);
+	}
+
+	public static String removeHtmlTags(String html) {
+		return html.replaceAll("\\\\u003c.*?\\\\u003e", "");
+
+
 	}
 }
