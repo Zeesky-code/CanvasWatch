@@ -6,12 +6,18 @@ import java.util.List;
 
 @Command(
 		name = "Canvas Watch",
-		description = "It prints the assignments from a given Canvas course."
+		mixinStandardHelpOptions = true,
+		version = "1.0",
+		description = "A program to watch your canvas courses and assignments."
 )
 
 public class CanvasWatch implements Runnable{
-	@CommandLine.Option(names = { "-t", "--token" }, required = true, description = "Canvas access token")
+	@CommandLine.Option(names = {"-t", "--token"}, description = "Canvas access token", required = true)
 	private String token;
+
+	@CommandLine.Option(names = {"-l", "--link"}, description = "Canvas university link", required = true)
+	private String link;
+
 
 	public static void main(String[] args) {
 		new CommandLine(new CanvasWatch()).execute(args);
@@ -20,7 +26,7 @@ public class CanvasWatch implements Runnable{
 	@Override
 	public void run() {
 		try {
-			CanvasApiClient client = new CanvasApiClient(token);
+			CanvasApiClient client = new CanvasApiClient(link, token);
 			List<Assignment> assignments = client.getAssignments();
 			for (Assignment assignment : assignments) {
 				System.out.println(assignment.getName());

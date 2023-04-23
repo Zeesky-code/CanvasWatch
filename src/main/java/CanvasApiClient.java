@@ -11,12 +11,14 @@ import java.util.List;
 
 
 
-public class CanvasApiClient {private static final String BASE_URL = "https://estuoys.eskisehir.edu.tr/api/v1/";
+public class CanvasApiClient {
+	private static String BASE_URL;
 	private final String token;
 	private final OkHttpClient client;
 
-	public CanvasApiClient(String token) {
+	public CanvasApiClient(String link, String token) {
 		this.token = token;
+		this.BASE_URL = link + "/api/v1/";
 		this.client = new OkHttpClient.Builder()
 				.addInterceptor(new AuthInterceptor(token))
 				.build();
