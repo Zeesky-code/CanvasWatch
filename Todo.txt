@@ -1,0 +1,6 @@
+Features to add:
+- Show list of courses and their codes in the course list
+- Allow user to input a course code to view the course assignments
+- Make code colorful
+- Come up with a way to avoid passing tokens for better security
+- Write Readme

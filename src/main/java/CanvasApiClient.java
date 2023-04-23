@@ -40,7 +40,5 @@ public class CanvasApiClient {private static final String BASE_URL = "https://es
 
 	public static String removeHtmlTags(String html) {
 		return html.replaceAll("\\\\u003c.*?\\\\u003e", "");
-
-
 	}
 }
