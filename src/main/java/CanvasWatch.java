@@ -28,7 +28,12 @@ public class CanvasWatch implements Runnable{
 	public void run() {
 		try {
 			CanvasApiClient client = new CanvasApiClient(link, token);
+			List<Course> courses = client.getCourses();
 			List<Assignment> assignments = client.getAssignments();
+			for (Course course : courses) {
+				System.out.println(course.getName());
+				System.out.println(course.getCourse_code());
+			}
 			for (Assignment assignment : assignments) {
 				System.out.println(assignment.getName());
 				System.out.println(assignment.getDescription());

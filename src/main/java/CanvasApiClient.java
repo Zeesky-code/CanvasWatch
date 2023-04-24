@@ -39,7 +39,20 @@ public class CanvasApiClient {
 		Assignment[] assignments = gson.fromJson(cleanedResponse, Assignment[].class);
 		return Arrays.asList(assignments);
 	}
-
+	public List<Course> getCourses() throws IOException{
+		String url = BASE_URL + "courses";
+		Request request = new Request.Builder()
+				.url(url)
+				.build();
+		Response response = client.newCall(request).execute();
+		if (!response.isSuccessful()){
+			throw new IOException("Unexpected code " + response);
+		}
+		String responseBody = response.body().string();
+		Gson gson = new Gson();
+		Course[] courses = gson.fromJson(responseBody, Course[].class);
+		return Arrays.asList(courses);
+	}
 
 	public static String removeHtmlTags(String html) {
 		return html.replaceAll("\\\\u003c.*?\\\\u003e", "");
