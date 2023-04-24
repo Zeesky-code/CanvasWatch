@@ -40,6 +40,7 @@ public class CanvasApiClient {
 		return Arrays.asList(assignments);
 	}
 
+
 	public static String removeHtmlTags(String html) {
 		return html.replaceAll("\\\\u003c.*?\\\\u003e", "");
 	}
