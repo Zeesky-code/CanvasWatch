@@ -20,6 +20,12 @@ public class CanvasWatch implements Runnable{
 	@Parameters(index = "1", description = "Canvas university link")
 	private String link;
 
+	@Option(names = {"-c", "--courses"}, description = "List all courses")
+	private Boolean courses = false;
+
+	@Option(names = {"-a", "--assignments"}, description = "List all assignments")
+	private Boolean assignments = false;
+
 	public static void main(String[] args) {
 		new CommandLine(new CanvasWatch()).execute(args);
 	}
@@ -28,15 +34,21 @@ public class CanvasWatch implements Runnable{
 	public void run() {
 		try {
 			CanvasApiClient client = new CanvasApiClient(link, token);
-			List<Course> courses = client.getCourses();
-			List<Assignment> assignments = client.getAssignments();
-			for (Course course : courses) {
-				System.out.println(course.getName() + " " + course.getId());
+			if(courses){
+				List<Course> courses = client.getCourses();
+				for (Course course : courses) {
+					System.out.println(course.getName() + " " + course.getId());
+				}
+			} else if(assignments){
+				List<Assignment> assignments = client.getAssignments();
+				for (Assignment assignment : assignments) {
+					System.out.println(assignment.getName());
+					System.out.println(assignment.getDescription());
+				}
+			}else{
+				System.out.println("No options selected");
 			}
-			for (Assignment assignment : assignments) {
-				System.out.println(assignment.getName());
-				System.out.println(assignment.getDescription());
-			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
