@@ -50,4 +50,33 @@ public class CanvasApiClientTest {
 			List<Course> result = client.getCourses();
 		});
 	}
+	@Test
+	public void TestEmptyArgs(){
+		String url = "";
+		CanvasApiClient client = new CanvasApiClient(url, TOKEN);
+		//test that exception is thrown for invalid URL
+		Assert.assertThrows(IllegalArgumentException.class, () -> {
+			List<Course> result = client.getCourses();
+		});
+	}
+	@Test
+	public void TestEmptyToken(){
+		String url = "https://canvas.instructure.com";
+		CanvasApiClient client = new CanvasApiClient(url, "");
+		//test that exception is thrown for invalid URL
+		Assert.assertThrows(IOException.class, () -> {
+			List<Course> result = client.getCourses();
+		});
+	}
+	@Test
+	public void TestErrorMessage(){
+		String url = "https://doesn'texist.com";
+		CanvasApiClient client = new CanvasApiClient(url, TOKEN);
+		//test that exception is thrown for invalid URL and check exception text
+		try {
+			List<Course> result = client.getCourses();
+		} catch (IOException e) {
+			Assert.assertThat(e.getMessage(), containsString("No such host is known (doesn'texist.com)"));
+		}
+	}
 }

@@ -31,7 +31,7 @@ public class CanvasApiClient {
 				.build();
 		Response response = client.newCall(request).execute();
 		if (!response.isSuccessful()){
-			throw new IOException("Unexpected code " + response);
+			throw new IOException("An error occurred, please try with another URL.");
 		}
 		String responseBody = response.body().string();
 		String cleanedResponse = removeHtmlTags(responseBody);
@@ -46,7 +46,7 @@ public class CanvasApiClient {
 				.build();
 		Response response = client.newCall(request).execute();
 		if (!response.isSuccessful()){
-			throw new IOException("Unexpected code " + response);
+			throw new IOException("An error occurred, please try with another URL.");
 		}
 		String responseBody = response.body().string();
 		Gson gson = new Gson();
