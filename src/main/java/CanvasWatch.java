@@ -20,6 +20,9 @@ public class CanvasWatch implements Runnable{
 	@Parameters(index = "1", description = "Canvas university link")
 	private String link;
 
+	@Parameters(index = "2", description = "Course id")
+	private int courseId;
+
 	@Option(names = {"-c", "--courses"}, description = "List all courses")
 	private Boolean courses = false;
 
@@ -33,7 +36,7 @@ public class CanvasWatch implements Runnable{
 	@Override
 	public void run() {
 		try {
-			CanvasApiClient client = new CanvasApiClient(link, token);
+			CanvasApiClient client = new CanvasApiClient(link, token, courseId);
 			if(courses){
 				List<Course> courses = client.getCourses();
 				for (Course course : courses) {

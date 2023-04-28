@@ -14,10 +14,16 @@ import java.util.List;
 public class CanvasApiClient {
 	private static String BASE_URL;
 	private final String token;
+	private final int courseID;
 	private final OkHttpClient client;
 
 	public CanvasApiClient(String link, String token) {
+		this(link, token, 0);
+	}
+
+	public CanvasApiClient(String link, String token, int courseID) {
 		this.token = token;
+		this.courseID = courseID;
 		this.BASE_URL = link + "/api/v1/";
 		this.client = new OkHttpClient.Builder()
 				.addInterceptor(new AuthInterceptor(token))
@@ -40,7 +46,7 @@ public class CanvasApiClient {
 		return Arrays.asList(assignments);
 	}
 	public List<Course> getCourses() throws IOException{
-		String url = BASE_URL + "courses";
+		String url = BASE_URL + "courses/"+courseID+"/assignments";
 		Request request = new Request.Builder()
 				.url(url)
 				.build();
