@@ -29,6 +29,9 @@ public class CanvasWatch implements Runnable{
 	@Option(names = {"-a", "--assignments"}, description = "List all assignments")
 	private Boolean assignments = false;
 
+	@Option(names = {"-q", "--quizzes"}, description = "List all quizzes")
+	private Boolean quizzes = false;
+
 	public static void main(String[] args) {
 		new CommandLine(new CanvasWatch()).execute(args);
 	}
@@ -47,6 +50,12 @@ public class CanvasWatch implements Runnable{
 				for (Assignment assignment : assignments) {
 					System.out.println(assignment.getName());
 					System.out.println(assignment.getDescription());
+				}
+			}else if(quizzes){
+				List<Quiz> quizzes = client.getQuizzes();
+				for (Quiz quiz : quizzes) {
+					System.out.println(quiz.getTitle());
+					System.out.println(quiz.getInstructions());
 				}
 			}else{
 				System.out.println("No options selected");

@@ -59,7 +59,20 @@ public class CanvasApiClient {
 		Course[] courses = gson.fromJson(responseBody, Course[].class);
 		return Arrays.asList(courses);
 	}
-
+	public List<Quiz> getQuizzes() throws IOException{
+		String url = BASE_URL + "courses/"+courseID+"/quizzes";
+		Request request = new Request.Builder()
+				.url(url)
+				.build();
+		Response response = client.newCall(request).execute();
+		if (!response.isSuccessful()){
+			throw new IOException("An error occurred, please try with another URL.");
+		}
+		String responseBody = response.body().string();
+		Gson gson = new Gson();
+		Quiz[] quizzes = gson.fromJson(responseBody, Quiz[].class);
+		return Arrays.asList(quizzes);
+	}
 	public static String removeHtmlTags(String html) {
 		return html.replaceAll("\\\\u003c.*?\\\\u003e", "");
 	}
