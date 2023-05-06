@@ -81,4 +81,11 @@ public class CanvasApiClientTest {
 //			Assert.assertThat(e.getMessage(), containsString("No such host is known (doesn'texist.com)"));
 //		}
 //	}
+	//test for quiz method
+	@Test
+	public void TestGetQuiz() throws IOException {
+		CanvasApiClient client = new CanvasApiClient(LINK,TOKEN,COURSEID);
+		List<Quiz> result = client.getQuizzes();
+		Assert.assertNotNull(result);
+	}
 }
